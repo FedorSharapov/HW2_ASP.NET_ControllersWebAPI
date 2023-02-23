@@ -1,7 +1,7 @@
 # HW2_ASP.NET_ControllersWebAPI
 
 ## Цель:
-Знакомство с ASP.NET Core
+Знакомство с ASP.NET Core.   
 В этом задании необходимо запустить проект и добавить методы Create/Delete/Update в контроллер EmployeesController.
 
 ## Описание/Пошаговая инструкция выполнения домашнего задания:
