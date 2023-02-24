@@ -11,6 +11,7 @@ using Otus.Teaching.PromoCodeFactory.Core.Abstractions.Repositories;
 using Otus.Teaching.PromoCodeFactory.Core.Domain.Administration;
 using Otus.Teaching.PromoCodeFactory.DataAccess.Data;
 using Otus.Teaching.PromoCodeFactory.DataAccess.Repositories;
+using Otus.Teaching.PromoCodeFactory.WebHost.Middleware;
 
 namespace Otus.Teaching.PromoCodeFactory.WebHost
 {
@@ -50,6 +51,8 @@ namespace Otus.Teaching.PromoCodeFactory.WebHost
             {
                 x.DocExpansion = "list";
             });
+
+            app.UseCustomExceptionHandler();
             
             app.UseHttpsRedirection();
 
