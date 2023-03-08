@@ -55,8 +55,7 @@ namespace Otus.Teaching.PromoCodeFactory.WebHost.Controllers
         /// <returns></returns>
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<List<EmployeeShortResponse>> GetEmployeesAsync()
+        public async Task<ActionResult<List<EmployeeShortResponse>>> GetEmployeesAsync()
         {
             var employees = await _employeeRepository.GetAllAsync();
 
@@ -68,7 +67,7 @@ namespace Otus.Teaching.PromoCodeFactory.WebHost.Controllers
                     FullName = x.FullName,
                 }).ToList();
 
-            return employeesModelList;
+            return Ok(employeesModelList);
         }
 
         /// <summary>
@@ -77,8 +76,6 @@ namespace Otus.Teaching.PromoCodeFactory.WebHost.Controllers
         /// <returns></returns>
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<EmployeeResponse>> GetEmployeeByIdAsync(Guid id)
         {
             var employee = await _employeeRepository.GetByIdAsync(id);
@@ -97,7 +94,7 @@ namespace Otus.Teaching.PromoCodeFactory.WebHost.Controllers
                 AppliedPromocodesCount = employee.AppliedPromocodesCount
             };
 
-            return employeeModel;
+            return Ok(employeeModel);
         }
 
         /// <summary>
@@ -106,8 +103,6 @@ namespace Otus.Teaching.PromoCodeFactory.WebHost.Controllers
         /// <returns></returns>
         [HttpPost("[action]")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<Guid>> Create(EmployeeRequest employeeRequest)
         {
             var roles = await InitRoles(employeeRequest.RoleIds);
@@ -129,8 +124,7 @@ namespace Otus.Teaching.PromoCodeFactory.WebHost.Controllers
         /// <returns></returns>
         [HttpPut("[action]/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<IActionResult> Update(Guid id, EmployeeRequest employeeRequest)
         {
             var employee = await _employeeRepository.GetByIdAsync(id);
@@ -147,7 +141,7 @@ namespace Otus.Teaching.PromoCodeFactory.WebHost.Controllers
                 AppliedPromocodesCount = employee.AppliedPromocodesCount
             });
 
-            return Ok();
+            return NoContent();
         }
 
         /// <summary>
@@ -155,14 +149,12 @@ namespace Otus.Teaching.PromoCodeFactory.WebHost.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpDelete("[action]/{id}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<IActionResult> Delete(Guid id)
         {
             await _employeeRepository.DeleteAsync(id);
 
-            return Ok();
+            return NoContent();
         }
     }
 }
